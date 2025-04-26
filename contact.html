@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chintu's Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.dark-mode {
+      background: #333;
+      color: #ddd;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 3rem 3rem; /* Increased padding for a larger header */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    body.light-mode header {
+      background-color: rgba(255, 255, 255, 0.8); /* Lighter header for light mode */
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: flex-start;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+    }
+
+    body.light-mode .nav-links a {
+      color: #333; /* Dark color for nav links in light mode */
+    }
+
+    .nav-links a:hover {
+      color: #ff9800; /* Orange color for hover effect */
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .mode-toggle {
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .mode-toggle:hover {
+      transform: rotate(20deg);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .contact {
+      background-color: rgba(255, 255, 255, 0.8); /* Light contact form background */
+      padding: 3rem;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 750px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body.light-mode .contact {
+      background-color: rgba(240, 240, 240, 0.9); /* Lighter background in light mode */
+    }
+
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #ff9800; /* Accent color for heading */
+    }
+
+    .contact-form {
+      width: 80%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      background-color: #f5f5f5;
+    }
+
+    body.light-mode .contact-form input,
+    body.light-mode .contact-form textarea {
+      background-color: #e0e0e0; /* Light input background */
+    }
+
+    .contact-form button {
+      width: 100%;
+      padding: 1rem;
+      background-color: #ff9800; /* Bright button color */
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .contact-form button:hover {
+      background-color: #ff5722; /* Darker orange on hover */
+    }
+
+    .success-message {
+      margin-top: 1rem;
+      color: #4caf50; /* Green success message */
+      font-size: 1.2rem;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      header {
+        padding: 2rem; /* Adjusted padding for responsiveness */
+      }
+
+      .contact {
+        height: auto;
+        padding: 2rem;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <nav style="display: flex; align-items: center; gap: 2rem;">
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="mode-toggle" onclick="toggleDarkMode()" style="position: absolute; right: 3rem;">
+      <span id="modeIcon">🌙</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="contact">
+      <h2>Contact Me</h2>
+      <div class="contact-form">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+        <button onclick="submitForm()">Submit</button>
+      </div>
+      <div class="success-message" id="successMessage">Your message has been successfully sent!</div>
+    </div>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+
+    function submitForm() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      if (name && email && message) {
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('message').value = '';
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.getElementById('modeIcon');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.textContent = '🌞';  // Change to sun icon when dark mode is active
+      } else {
+        icon.textContent = '🌙';  // Change to moon icon when light mode is active
+      }
+    }
+  </script>
+
+</body>
+</html>
